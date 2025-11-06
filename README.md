@@ -1,6 +1,6 @@
 # DevOps Assignment — Load-Balanced Web Application (Terraform + AWS)
 
-This README explains how to recreate the entire environment — from installing tools to verifying a highly available web application deployed on AWS using Terraform.
+This README explains how to recreate the entire environment from installing tools to verifying a highly available web application deployed on AWS using Terraform.
 
 ## Overview
 
@@ -172,9 +172,12 @@ In PowerShell, you can fix it using:
 (Get-Content .\userdata.sh) -replace "`r`n", "`n" | Set-Content -NoNewline .\userdata.sh
 ```
 
+
+
+
 main.tf
 ```hcl
-# --- VPC ---
+# VPC
 resource "aws_vpc" "this" {
   cidr_block = "10.0.0.0/16"
 
@@ -183,7 +186,7 @@ resource "aws_vpc" "this" {
   }
 }
 
-# --- Subnets (two AZs) ---
+# Subnets (two AZs)
 resource "aws_subnet" "a" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = "10.0.1.0/24"
@@ -204,7 +207,7 @@ resource "aws_subnet" "b" {
   }
 }
 
-# --- Internet Gateway ---
+# Internet Gateway
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.this.id
 
@@ -213,7 +216,7 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-# --- Route Table & Routes ---
+# Route Table & Routes
 resource "aws_route_table" "rt" {
   vpc_id = aws_vpc.this.id
 
@@ -237,7 +240,7 @@ resource "aws_route_table_association" "b" {
   route_table_id = aws_route_table.rt.id
 }
 
-# --- Security Group ---
+# Security Group
 resource "aws_security_group" "web_sg" {
   name   = "web-sg"
   vpc_id = aws_vpc.this.id
@@ -273,7 +276,7 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-# --- Key Pair (uploads public key) ---
+# Key Pair (uploads public key)
 resource "aws_key_pair" "deployer" {
   key_name   = "tf-deployer-key"
   public_key = var.ssh_public_key
@@ -290,7 +293,7 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
-# --- Web server instances (counted) ---
+# Web server instances (counted)
 resource "aws_instance" "web" {
   count                       = var.instance_count
   ami                         = data.aws_ami.amazon_linux.id
@@ -307,7 +310,7 @@ resource "aws_instance" "web" {
   }
 }
 
-# --- Application Load Balancer ---
+# Application Load Balancer
 resource "aws_lb" "alb" {
   name               = "tf-alb"
   internal           = false
@@ -320,7 +323,7 @@ resource "aws_lb" "alb" {
   }
 }
 
-# --- Target Group for ALB ---
+# Target Group for ALB
 resource "aws_lb_target_group" "tg" {
   name     = "tf-tg"
   port     = 80
@@ -341,7 +344,7 @@ resource "aws_lb_target_group" "tg" {
   }
 }
 
-# --- Attach instances to target group ---
+# Attach instances to target group
 resource "aws_lb_target_group_attachment" "tg_attach" {
   count            = var.instance_count
   target_group_arn = aws_lb_target_group.tg.arn
@@ -349,7 +352,7 @@ resource "aws_lb_target_group_attachment" "tg_attach" {
   port             = 80
 }
 
-# --- ALB Listener (HTTP) ---
+# ALB Listener (HTTP)
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
@@ -417,7 +420,7 @@ Wait 2–3 minutes while Terraform creates all resources.
 
 At the end, it prints the ALB DNS name, for example:
 ```
-alb_dns = "tf-alb-123456789.us-east-1.elb.amazonaws.com"
+alb_dns = "tf-alb-914652170.us-east-1.elb.amazonaws.com/"
 ```
 
 ---
@@ -427,13 +430,16 @@ alb_dns = "tf-alb-123456789.us-east-1.elb.amazonaws.com"
 1) Browser  
 Open:
 ```
-http://tf-alb-123456789.us-east-1.elb.amazonaws.com
+http://tf-alb-914652170.us-east-1.elb.amazonaws.com/
 ```
 You should see:
 ```
-Hello World from ip-10-0-1-xxx
+Hello World from ip-10-0-2-102.ec2.internal
 ```
 Refresh — it should alternate between the two servers.
+```
+Hello World from ip-10-0-1-12.ec2.internal
+```
 
 2) PowerShell
 ```powershell
