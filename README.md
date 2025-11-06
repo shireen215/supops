@@ -460,7 +460,7 @@ This confirms automatic failover.
 **What I Liked About My Solution**
 
 - The infrastructure is completely automated using Terraform, which makes it easy to recreate consistently.
-- The solution is scalable — adding more web servers only requires changing one variable.
+- The solution is scalable adding more web servers only requires changing one variable.
 - Nginx installation happens automatically through userdata.sh without manual intervention.
 - Load Balancer health checks ensure automatic failover, improving reliability.
 
