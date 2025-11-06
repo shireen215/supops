@@ -456,3 +456,17 @@ curl http://$(terraform output -raw alb_dns)
 4. Visit the ALB DNS again — it should still serve responses from the healthy instance.
 
 This confirms automatic failover.
+
+**What I Liked About My Solution**
+
+- The infrastructure is completely automated using Terraform, which makes it easy to recreate consistently.
+- The solution is scalable — adding more web servers only requires changing one variable.
+- Nginx installation happens automatically through userdata.sh without manual intervention.
+- Load Balancer health checks ensure automatic failover, improving reliability.
+
+
+**What I Disliked About My Solution**
+
+- The EC2 instances are running in public subnets; a production-grade setup should use private subnets.
+- SSH access is open to the world (0.0.0.0/0), which is not secure for real environments.
+- Logging and monitoring are not included yet, which would be important for operational visibility.
