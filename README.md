@@ -282,7 +282,7 @@ resource "aws_key_pair" "deployer" {
   public_key = var.ssh_public_key
 }
 
-# --- latest Amazon Linux 2 AMI ---
+# Latest Amazon Linux 2 AMI
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
