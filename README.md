@@ -23,7 +23,7 @@ You need:
 
 ---
 
-## Step 1 — Install Required Tools
+## Step 1 : Install Required Tools
 
 1. Install Terraform
 
@@ -100,7 +100,7 @@ You’ll use this in Terraform.
 
 ---
 
-## Step 2 — Project Setup
+## Step 2 : Project Setup
 
 Create a folder for your project:
 ```powershell
@@ -120,7 +120,7 @@ Inside it, create these files:
 
 ---
 
-## Step 3 — Terraform Configuration Files
+## Step 3 : Terraform Configuration Files
 
 Below are the sample contents for each file. Paste them into the respective files in your project folder.
 
@@ -375,7 +375,7 @@ output "alb_dns" {
 
 ---
 
-## Step 4 — Initialize Terraform
+## Step 4 : Initialize Terraform
 
 In PowerShell (inside your Terraform folder):
 ```powershell
@@ -385,7 +385,7 @@ This downloads the required AWS provider.
 
 ---
 
-## Step 5 — Validate Configuration
+## Step 5 : Validate Configuration
 
 ```powershell
 terraform validate
@@ -398,7 +398,7 @@ Success! The configuration is valid.
 
 ---
 
-## Step 6 — Plan Deployment
+## Step 6 : Plan Deployment
 
 Run the Terraform plan and pass your public SSH key from your local `.ssh`:
 ```powershell
@@ -409,7 +409,7 @@ Terraform will show you all resources it’s going to create.
 
 ---
 
-## Step 7 — Apply Deployment
+## Step 7 : Apply Deployment
 
 Apply the plan:
 ```powershell
@@ -425,7 +425,7 @@ alb_dns = "tf-alb-914652170.us-east-1.elb.amazonaws.com/"
 
 ---
 
-## Step 8 — Test Your Load Balancer
+## Step 8 : Test Your Load Balancer
 
 1) Browser  
 Open:
@@ -448,7 +448,7 @@ curl http://$(terraform output -raw alb_dns)
 
 ---
 
-## Step 9 — Test Failover
+## Step 9 : Test Failover
 
 1. Go to AWS Console → EC2 → Instances.
 2. Stop one instance (e.g., `web-1`).
