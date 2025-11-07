@@ -470,5 +470,6 @@ This confirms automatic failover.
 **What I Disliked About My Solution**
 
 - The EC2 instances are running in public subnets; a production-grade setup should use private subnets.
+Why: For a small demo I placed instances in public subnets so they have direct Internet access to download packages during boot and so I could SSH into them for debugging. In production, instances should live in private subnets and use a NAT gateway or a bastion/SSM approach for secure outbound access and administration.
 - SSH access is open to the world (0.0.0.0/0), which is not secure for real environments.
-- Logging and monitoring are not included yet, which would be important for operational visibility.
+Why: For demo/debugging convenience I allowed SSH from anywhere so I could easily reach instances. This is insecure because it exposes SSH to the public internet. In production you should restrict SSH to trusted IPs, use a bastion host, or use AWS Systems Manager Session Manager (no inbound SSH required).
