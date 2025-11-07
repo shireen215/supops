@@ -457,6 +457,8 @@ curl http://$(terraform output -raw alb_dns)
 
 This confirms automatic failover.
 
+---
+
 **What I Liked About My Solution**
 
 - The infrastructure is completely automated using Terraform, which makes it easy to recreate consistently.
