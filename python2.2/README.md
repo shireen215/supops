@@ -191,7 +191,7 @@ SecretAccessKey: ...
 ```
 
 ---
-<img width="505" height="255" alt="image" src="https://github.com/user-attachments/assets/78d74d51-4dc4-46d3-a35b-1da2dc4b3094" />
+![image alt](https://github.com/mohamedfaseeh/Superops-Img/blob/fea4fbe9e162eb300dee4a0b2751f8b81fe8f62c/Py2.2.jpg)
 
 ---
 
