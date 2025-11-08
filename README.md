@@ -1,4 +1,4 @@
-# DevOps Assignment — Load-Balanced Web Application (Terraform + AWS)
+# Load-Balanced Web Application (Terraform + AWS)
 
 This README explains how to recreate the entire environment from installing tools to verifying a highly available web application deployed on AWS using Terraform.
 
