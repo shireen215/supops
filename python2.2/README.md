@@ -171,23 +171,23 @@ python create_user.py
 ```
 
 Follow the prompts, for example:
-- Enter new IAM username: alice.dev
+- Enter new IAM username: jhon
 - Enable console login? (yes/no): yes
-- Enter temporary password... (must meet AWS policy)
-- Enter group name...: Developers
+- Enter temporary password:(must meet AWS policy)
+- Enter group name: dev
 - Enter AWS managed policy names: ReadOnlyAccess, AmazonS3FullAccess
 
 Expected example output:
 ```
 [OK] Group 'dev' created successfully.
-[OK] Attached policy 'ReadOnlyAccess' to group 'Developers'.
+[OK] Attached policy 'ReadOnlyAccess' to group 'dev'.
 [OK] User 'Jhon' created successfully.
-[OK] Console login enabled for 'alice.dev'.
-[OK] Added 'Jhon' to group 'Developers'.
+[OK] Console login enabled for 'Jhon'
+[OK] Added 'Jhon' to group 'dev'.
 
 [OK] Access Key Created (Copy and Store Securely):
-Access Key ID: AKIA...
-SecretAccessKey: ...
+Access Key ID: AKIA****
+SecretAccessKey: *****
 ```
 
 ---
@@ -204,7 +204,7 @@ Console access
 
 Programmatic access (test using a named profile):
 ```bash
-aws configure --profile alice.dev
+aws configure --profile jhon 
 # paste Access Key ID and SecretAccessKey from the script output
 # region: same as before
 # output: json
