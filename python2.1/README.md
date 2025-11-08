@@ -224,5 +224,16 @@ This rule triggers the Lambda for many resource-creation API calls. The Lambda t
   1. Create an S3 bucket.
   2. After creation, open the bucket’s **Properties** → **Tags** or the S3 **Tags** tab; `CreatedBy` should be present.
 
-- Other services:
-  - Create a Lambda, DynamoDB table, RDS, ALB, etc. If not immediately tagged, check Lambda CloudWatch Logs to see the inbound event body and determine how to extract the resource identifier and add support.
+---
+![image alt](https://github.com/mohamedfaseeh/Superops-Img/blob/ff87f04ca2a2848a8d1f0fea34978b1f3dbdd97f/EC2tag.png)
+![image alt](https://github.com/mohamedfaseeh/Superops-Img/blob/ff87f04ca2a2848a8d1f0fea34978b1f3dbdd97f/S3tag.png)
+
+---
+**What I Liked About My Solution**
+- Automatically tagging resources with the creator’s ARN makes it easy to identify who created which resource, improving transparency and ownership tracking.
+- Tags can be used to track and allocate costs to teams or users, simplifying cost optimization and chargeback reporting.
+- Eliminates the need for developers or admins to manually tag resources, preventing human error and inconsistent tagging.
+
+**What I Disliked About My Solution**
+- Requires setting up CloudTrail, EventBridge, and Lambda correctly. A small misconfiguration can cause tags to fail or miss some resources.
+- Continuous tagging through EventBridge and Lambda can incur minor costs and may hit service limits in high-volume environments.
