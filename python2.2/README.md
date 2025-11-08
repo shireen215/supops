@@ -209,7 +209,7 @@ aws configure --profile jhon
 # region: same as before
 # output: json
 
-aws sts get-caller-identity --profile alice.dev
+aws sts get-caller-identity --profile jhon
 ```
 The returned ARN should correspond to the new user.
 
