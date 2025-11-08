@@ -1,6 +1,6 @@
 # AWS IAM User Provisioning with Python
 
-This guide shows how to automate IAM user onboarding on AWS using a simple Python (boto3) script. It's beginner-friendly and walks through prerequisites, required IAM permissions, the provisioning script, how to run it, and how to verify the created user.
+This guide shows how to automate IAM user onboarding on AWS using a simple Python (boto3) script.
 
 What you'll build
 - A Python script that, given inputs:
