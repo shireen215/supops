@@ -406,6 +406,7 @@ terraform plan -var "ssh_public_key=$(Get-Content $env:USERPROFILE\.ssh\id_rsa.p
 ```
 
 Terraform will show you all resources it’s going to create.
+![image alt](https://github.com/shireen215/supops-img/blob/b78fa7a044e41fd6a12b3c8abe39a7b97e02833f/Tf%20plan.png)
 
 ---
 
@@ -422,6 +423,7 @@ At the end, it prints the ALB DNS name, for example:
 ```
 alb_dns = "tf-alb-914652170.us-east-1.elb.amazonaws.com/"
 ```
+![image alt](https://github.com/shireen215/supops-img/blob/b78fa7a044e41fd6a12b3c8abe39a7b97e02833f/Tf%20apply.jpg)
 
 ---
 
