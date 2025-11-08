@@ -212,3 +212,14 @@ aws configure --profile alice.dev
 aws sts get-caller-identity --profile alice.dev
 ```
 The returned ARN should correspond to the new user.
+
+---
+**What I Liked About My Solution**
+- User creation, group assignment, and policy attachment are automated — reducing manual effort and human error.
+- You can onboard or offboard hundreds of users in seconds.
+- The same script can be reused across multiple AWS accounts or environments, ensuring identical configurations.
+
+**What I Disliked About My Solution**
+- The execution user/role needs wide IAM permissions (e.g., iam:CreateUser, iam:AttachUserPolicy), which can be risky if not restricted properly.
+- Failures (e.g., password policy violations) require explicit exception handling to prevent partial provisioning.
+- AWS APIs evolve — scripts must be updated when services or policy ARNs change.
