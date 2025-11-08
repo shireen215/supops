@@ -192,6 +192,7 @@ SecretAccessKey: ...
 
 ---
 <img width="505" height="255" alt="image" src="https://github.com/user-attachments/assets/78d74d51-4dc4-46d3-a35b-1da2dc4b3094" />
+
 ---
 
 ## Verify the new user
