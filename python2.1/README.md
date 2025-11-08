@@ -108,65 +108,19 @@ Notes:
 
 ---
 
-## 4 — Attach/Update the Lambda execution role permissions
+## 4 — Add required permissions to Lambda role.
 
-Lambda requires permissions to:
-- Tag resources via the Resource Groups Tagging API
-- Make service-specific tagging calls as needed
-- Write logs to CloudWatch Logs
+1. Open the Lambda function
+2. Go to Configuration → Permissions
+3. Click the Role name
+4. Click Add permissions → Attach policies
+5. Search and attach:
 
-Edit the Lambda execution role (open from Configuration → Permissions → Execution role link in the Lambda console) and ensure it has these permissions:
-
-Minimum/Recommended policy actions:
-- `logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents` (AWSLambdaBasicExecutionRole)
-- `tag:GetResources`, `tag:TagResources`, `tag:UntagResources` (Resource Groups Tagging API)
-- Service-specific tagging operations you plan to use (examples):
-  - `ec2:CreateTags` (for EC2)
-  - `s3:PutBucketTagging` (for S3, note S3 tagging APIs are slightly different)
-  - `rds:AddTagsToResource` (RDS)
-  - `elasticloadbalancing:AddTags` (ELB/ALB)
-- (Optionally) `iam:TagRole`, etc if tagging IAM resources (note some resource types have special tag constraints)
-
-You can attach AWS-managed policies and/or add a custom inline policy that grants `tag:TagResources` plus the service-specific tag actions you need.
-
-Example inline policy snippet (adjust actions as required):
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "tag:GetResources",
-        "tag:TagResources"
-      ],
-      "Resource": ["*"]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:CreateTags",
-        "s3:PutBucketTagging",
-        "rds:AddTagsToResource",
-        "elasticloadbalancing:AddTags"
-      ],
-      "Resource": ["*"]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": ["arn:aws:logs:*:*:*"]
-    }
-  ]
-}
-```
-
-Note: Using `"Resource": ["*"]` is easier for a demo. For production, restrict to required ARNs.
+ResourceGroupsTaggingAPI	- Allows tagging resources
+AmazonEC2FullAccess	 - Allows applying tag to EC2 instances
+AmazonS3FullAccess - (optional for S3 tagging)	Allows tagging S3 buckets
+  
+        
 
 ---
 
