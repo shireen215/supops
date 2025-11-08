@@ -463,7 +463,7 @@ This confirms automatic failover.
 
 ---
 
-![image alt]https://github.com/shireen215/supops-img/blob/7b9a64a4e3dd6dff235cb5acd085675b58012309/New%20Project%20(5).png)
+![image alt](https://github.com/shireen215/supops-img/blob/7b9a64a4e3dd6dff235cb5acd085675b58012309/New%20Project%20(5).png)
 
 ---
 **What I Liked About My Solution**
