@@ -8,7 +8,7 @@ CloudTrail → EventBridge Rule(s) → Lambda → ResourceGroupsTaggingAPI (fall
 
 ---
 
-## Quick architecture (one-liner)
+## Quick architecture
 
 CloudTrail records API calls, EventBridge detects "resource created" events and invokes a Lambda which extracts the user ARN and applies the `CreatedBy=<user_arn>` tag using the Resource Groups Tagging API (and service-specific APIs if needed).
 
@@ -22,7 +22,7 @@ CloudTrail records API calls, EventBridge detects "resource created" events and 
   - EventBridge rules
   - CloudTrail (or access to confirm it exists)
 - Basic familiarity with the AWS Console (or AWS CLI if you prefer CLI steps).
-- (Optional) AWS CLI configured locally for testing.
+- AWS CLI configured locally for testing.(Optional)
 
 ---
 
@@ -48,7 +48,7 @@ CloudTrail must be enabled so EventBridge can match CloudTrail events (the Event
 
 ### 3.1 — Paste the Lambda handler code
 
-Open the function code editor and replace the default handler with this exact code (copy/paste as-is). This simple version handles events that include ARNs, EC2 `RunInstances`, and S3 `CreateBucket`. Extend it later for more services.
+Open the function code editor and replace the default handler with this exact code. This simple version handles events that include ARNs, EC2 `RunInstances`, and S3 `CreateBucket`. Extend it later for more services.
 
 ```python
 import json
@@ -62,12 +62,12 @@ def lambda_handler(event, context):
         # Extract resource ARNs (many AWS services use different event structures)
         resource_arns = []
 
-        # ✅ Case 1: Resources listed in the event
+        #  Case 1: Resources listed in the event
         if "resources" in event:
             for r in event["resources"]:
                 resource_arns.append(r["ARN"])
 
-        # ✅ Case 2: EC2 -> instance creation
+        #  Case 2: EC2 -> instance creation
         if detail.get("eventName") == "RunInstances":
             instances = detail["responseElements"]["instancesSet"]["items"]
             for instance in instances:
@@ -76,7 +76,7 @@ def lambda_handler(event, context):
                 account = event["account"]
                 resource_arns.append(f"arn:aws:ec2:{region}:{account}:instance/{instance_id}")
 
-        # ✅ Case 3: S3 -> bucket creation
+        #  Case 3: S3 -> bucket creation
         if detail.get("eventName") == "CreateBucket":
             bucket_name = detail["requestParameters"]["bucketName"]
             region = event["region"]
@@ -89,14 +89,14 @@ def lambda_handler(event, context):
                 ResourceARNList=resource_arns,
                 Tags={"CreatedBy": user_arn}
             )
-            print(f"✅ Tagged: {resource_arns} with CreatedBy={user_arn}")
+            print(f" Tagged: {resource_arns} with CreatedBy={user_arn}")
         else:
-            print("ℹ️ No taggable resource ARNs detected in event.")
+            print(" No taggable resource ARNs detected in event.")
 
         return {"status": "success"}
 
     except Exception as e:
-        print("❌ Error:", e)
+        print(" Error:", e)
         return {"status": "error", "details": str(e)}
 ```
 
@@ -116,15 +116,15 @@ Notes:
 4. Click Add permissions → Attach policies
 5. Search and attach:
 
-ResourceGroupsTaggingAPI	- Allows tagging resources
-AmazonEC2FullAccess	 - Allows applying tag to EC2 instances
-AmazonS3FullAccess - (optional for S3 tagging)	Allows tagging S3 buckets
+- ResourceGroupsTaggingAPI	- Allows tagging resources
+- AmazonEC2FullAccess	 - Allows applying tag to EC2 instances
+- AmazonS3FullAccess - (optional for S3 tagging)	Allows tagging S3 buckets
   
         
 
 ---
 
-## 5 — Create EventBridge rules (recommended two-rule approach)
+## 5 — Create EventBridge rules
 
 To catch creation API calls broadly, create EventBridge rules that match CloudTrail API events.
 
