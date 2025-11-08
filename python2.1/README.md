@@ -180,7 +180,7 @@ To catch creation API calls broadly, create EventBridge rules that match CloudTr
 
 Name: `AutoTag-All-Create-Actions`
 
-Event pattern (Custom pattern — paste this JSON):
+Event pattern: Custom Pattern
 
 ```json
 {
