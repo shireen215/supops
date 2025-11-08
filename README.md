@@ -166,14 +166,6 @@ chown root:root ${webroot}/index.html
 chmod 644 ${webroot}/index.html
 ```
 
-⚠️ Ensure this file uses Unix line endings (LF).  
-In PowerShell, you can fix it using:
-```powershell
-(Get-Content .\userdata.sh) -replace "`r`n", "`n" | Set-Content -NoNewline .\userdata.sh
-```
-
-
-
 
 main.tf
 ```hcl
