@@ -1,4 +1,4 @@
-# Auto-tag AWS Resources with Creator ARN
+# Auto-Tag AWS Resources with Creator ARN
 
 This guide shows how to automatically tag every newly created AWS resource with the creator's ARN:
 Tag key: `CreatedBy`  
