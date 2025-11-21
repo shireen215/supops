@@ -14,7 +14,7 @@ CloudTrail records API calls, EventBridge detects "resource created" events and 
 
 ---
 
-## 1 — Prerequisites
+## Step 1: Prerequisites
 
 - AWS account and an IAM user with privileges to create:
   - Lambda functions
@@ -26,7 +26,7 @@ CloudTrail records API calls, EventBridge detects "resource created" events and 
 
 ---
 
-## 2 — Enable or confirm CloudTrail
+## Step 2: Enable or confirm CloudTrail
 
 1. Open AWS Console → CloudTrail.
 2. If you do not have a trail, choose **Create trail**.
@@ -38,7 +38,7 @@ CloudTrail must be enabled so EventBridge can match CloudTrail events (the Event
 
 ---
 
-## 3 — Create the Lambda function (Python)
+## Step 3: Create the Lambda function (Python)
 
 1. Open Console → Lambda → Create function → Author from scratch.
 2. Name: `auto-tag-created-resources`
@@ -46,7 +46,7 @@ CloudTrail must be enabled so EventBridge can match CloudTrail events (the Event
 4. Permissions: Create a new role from AWS policy templates (we will update it).
 5. Create the function.
 
-### 3.1 — Paste the Lambda handler code
+### Step 3.1: Paste the Lambda handler code
 
 Open the function code editor and replace the default handler with this exact code. This simple version handles events that include ARNs, EC2 `RunInstances`, and S3 `CreateBucket`. Extend it later for more services.
 
@@ -108,7 +108,7 @@ Notes:
 
 ---
 
-## 4 — Add required permissions to Lambda role.
+## Step 4: Add required permissions to Lambda role.
 
 1. Open the Lambda function
 2. Go to Configuration → Permissions
@@ -124,13 +124,13 @@ Notes:
 
 ---
 
-## 5 — Create EventBridge rules
+## Step 5: Create EventBridge rules
 
 To catch creation API calls broadly, create EventBridge rules that match CloudTrail API events.
 
 > Important: Event pattern type is "AWS API Call via CloudTrail" (CloudTrail must be enabled).
 
-### 5.1 — Rule — Generic create/run/put/launch/register prefix (broad coverage)
+### Step 5.1: Rule — Generic create/run/put/launch/register prefix (broad coverage)
 
 Name: `AutoTag-All-Create-Actions`
 
@@ -158,7 +158,7 @@ This rule triggers the Lambda for many resource-creation API calls. The Lambda t
 
 ---
 
-## 6 — How the Lambda extracts ARNs (concept)
+## Step 6: How the Lambda extracts ARNs (concept)
 
 - Many CloudTrail events include a `resources` array containing ARNs — those are easy to tag.
 - Some service APIs only return identifiers (e.g., EC2 instanceId). The Lambda can construct ARNs from the event's `region`, `account`, and the resource ID using known ARN formats.
@@ -166,7 +166,7 @@ This rule triggers the Lambda for many resource-creation API calls. The Lambda t
 
 ---
 
-## 7 — Test the solution
+## Step 7: Test the solution
 
 - EC2 test:
   1. Launch an EC2 instance (RunInstances) as an IAM user.
